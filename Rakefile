@@ -35,6 +35,14 @@ namespace :build do
     Packager::PlayPackager.build
   end
 
+  desc "Build mustache_govuk_template-#{GovukTemplate::VERSION}.tgz into the pkg directory"
+  task :mustache => :compile do
+    puts "Building pkg/mustache_govuk_template-#{GovukTemplate::VERSION}.tgz"
+    require 'packager/mustache_packager'
+    Packager::MustachePackager.build
+  end
+
+
   desc "Build and release gem to gemfury if version has been updated"
   task :and_release_if_updated => :build do
     p = GemPublisher::Publisher.new('govuk_template.gemspec')
