@@ -21,57 +21,14 @@ namespace :build do
     Packager::GSPPackager.build
   end
 
-  desc "Build and release gem to gemfury if version has been updated"
+  desc "Build and release if version has been updated"
   task :and_release_if_updated => :build do
-    p = GemPublisher::Publisher.new('govuk_template.gemspec')
-    if p.version_released?
-      puts "govuk_template-#{GovukTemplate::VERSION} already released.  Not pushing."
-    else
-      puts "Pushing govuk_template-#{GovukTemplate::VERSION} to gemfury"
-      p.pusher.push "pkg/govuk_template-#{GovukTemplate::VERSION}.gem", :rubygems
-      p.git_remote.add_tag "v#{GovukTemplate::VERSION}"
-      puts "Done."
-
-      require 'publisher/docs_publisher'
-      q = Publisher::DocsPublisher.new
-      puts "Pushing docs #{GovukTemplate::VERSION} to git repo"
-      q.publish
-      puts "Done."
-    end
-
     require 'publisher/release_publisher'
     q = Publisher::ReleasePublisher.new
     if q.version_released?
       puts "Github release v#{GovukTemplate::VERSION} already released. Not pushing."
     else
       puts "Pushing Github release v#{GovukTemplate::VERSION}"
-      q.publish
-    end
-
-    require 'publisher/play_publisher'
-    q = Publisher::PlayPublisher.new
-    if q.version_released?
-      puts "govuk_template_play #{GovukTemplate::VERSION} already released. Not pushing."
-    else
-      puts "Pushing govuk_template_play #{GovukTemplate::VERSION} to git repo"
-      q.publish
-    end
-
-    require 'publisher/mustache_publisher'
-    q = Publisher::MustachePublisher.new
-    if q.version_released?
-      puts "govuk_template_mustache #{GovukTemplate::VERSION} already released. Not pushing."
-    else
-      puts "Pushing govuk_template_mustache #{GovukTemplate::VERSION} to git repo"
-      q.publish
-    end
-
-    require 'publisher/ejs_publisher'
-    q = Publisher::EJSPublisher.new
-    if q.version_released?
-      puts "govuk_template_ejs #{GovukTemplate::VERSION} already released. Not pushing."
-    else
-      puts "Pushing govuk_template_ejs #{GovukTemplate::VERSION} to git repo"
       q.publish
     end
   end
