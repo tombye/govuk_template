@@ -20,6 +20,12 @@ module Compiler
       proposition_header: "<g:render template='/common/propositionHeader'/>"
     }
 
+    def render_erb
+      f=File.read(@file)
+      f.gsub!(/<head>/, "<head>\n    <g:set var='entityName' value='Supplier' />") unless @is_stylesheet
+      ERB.new(f).result(binding)
+    end
+
     def handle_yield(section = :layout)
       @@yield_hash[section]
     end
