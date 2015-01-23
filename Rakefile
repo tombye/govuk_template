@@ -11,65 +11,9 @@ task :compile do
 end
 
 desc "Build both gem and tar version"
-task :build => ["build:gem", "build:tar", "build:play", "build:mustache", "build:liquid", "build:mustache_inheritance", "build:jinja", "build:ejs", "build:gsp"]
+task :build => ["build:gsp"]
 
 namespace :build do
-  desc "Build govuk_template-#{GovukTemplate::VERSION}.gem into the pkg directory"
-  task :gem => :compile do
-    puts "Building pkg/govuk_template-#{GovukTemplate::VERSION}.gem"
-    require 'packager/gem_packager'
-    Packager::GemPackager.build
-  end
-
-  desc "Build govuk_template-#{GovukTemplate::VERSION}.tgz into the pkg directory"
-  task :tar => :compile do
-    puts "Building pkg/govuk_template-#{GovukTemplate::VERSION}.tgz"
-    require 'packager/tar_packager'
-    Packager::TarPackager.build
-  end
-
-  desc "Build play_govuk_template-#{GovukTemplate::VERSION}.tgz into the pkg directory"
-  task :play => :compile do
-    puts "Building pkg/play_govuk_template-#{GovukTemplate::VERSION}.tgz"
-    require 'packager/play_packager'
-    Packager::PlayPackager.build
-  end
-
-  desc "Build mustache_govuk_template-#{GovukTemplate::VERSION} into the pkg directory"
-  task :mustache => :compile do
-    puts "Building pkg/mustache_govuk_template-#{GovukTemplate::VERSION}"
-    require 'packager/mustache_packager'
-    Packager::MustachePackager.build
-  end
-
-  desc "Build liquid_govuk_template-#{GovukTemplate::VERSION} into the pkg directory"
-  task :liquid => :compile do
-    puts "Building pkg/liquid_govuk_template-#{GovukTemplate::VERSION}"
-    require 'packager/liquid_packager'
-    Packager::LiquidPackager.build
-  end
-
-  desc "Build mustache_inheritance_govuk_template-#{GovukTemplate::VERSION} into the pkg directory"
-  task :mustache_inheritance => :compile do
-    puts "Building pkg/mustache_inheritance_govuk_template-#{GovukTemplate::VERSION}"
-    require 'packager/mustache_inheritance_packager'
-    Packager::MustacheInheritancePackager.build
-  end
-
-  desc "Build jinja_govuk_template-#{GovukTemplate::VERSION} into the pkg directory"
-  task :jinja => :compile do
-    puts "Building pkg/jinja_govuk_template-#{GovukTemplate::VERSION}"
-    require 'packager/jinja_packager'
-    Packager::JinjaPackager.build
-  end
-
-  desc "Build ejs_govuk_template-#{GovukTemplate::VERSION} into the pkg directory"
-  task :ejs => :compile do
-    puts "Building pkg/ejs_govuk_template-#{GovukTemplate::VERSION}"
-    require 'packager/ejs_packager'
-    Packager::EJSPackager.build
-  end
-
   desc "Build gsp_govuk_template-#{GovukTemplate::VERSION} into the pkg directory"
   task :gsp => :compile do
     puts "Building pkg/gsp_govuk_template-#{GovukTemplate::VERSION}"
