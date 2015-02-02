@@ -12,10 +12,10 @@ module Compiler
       cookie_message: "<g:render template='/common/cookieMessage'/>",
       footer_support_links: "<g:render template='/common/footerSupportLinks'/>",
       footer_top: "<g:render template='/common/footerTop'/>",
-      head: "<g:render template='/common/stylesheets'/>\n    <g:layoutHead/>\n    <r:layoutResources />",
+      head: "<g:render template='/common/head'/>\n    <g:layoutHead/>\n    <r:layoutResources />",
       header_class: "with-proposition",
-      html_lang: "<g:htmlLang default='en'/>",
-      inside_header: "${insideHeader}",
+      html_lang: "${htmlLang?:'en'}",
+      inside_header: "<g:render template='/common/insideHeader'/>",
       page_title: "<g:layoutTitle default='GOV.UK - The best place to find government services and information'/>",
       proposition_header: "<g:render template='/common/propositionHeader'/>"
     }
@@ -39,7 +39,7 @@ module Compiler
       when '.js'
         "${resource(dir: 'js', file: '#{file}')}"
       else
-        "${resource(dir: 'img', file: '#{file}')}"
+        "${resource(dir: 'images', file: '#{file}')}"
       end
     end
 
